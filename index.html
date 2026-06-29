@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Hyejin Ryoo — Business Analyst &amp; Product Designer</title>
+<meta name="description" content="Hyejin Ryoo is a business analyst and product designer in New York, working where data analysis becomes product. Retail POS, CRM, and NLP." />
+
+<!-- Open Graph: controls the preview when the link is shared -->
+<meta property="og:title" content="Hyejin Ryoo — Business Analyst & Product Designer" />
+<meta property="og:description" content="Where data analysis becomes product design. Retail POS, CRM, and NLP work." />
+<meta property="og:type" content="website" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+
+<style>
+  /* ============================================================
+     DESIGN TOKENS  —  change these to re-skin the whole site
+     ============================================================ */
+  :root {
+    /* color */
+    --bg:        #F4F4F1;   /* neutral paper */
+    --surface:   #FFFFFF;
+    --ink:       #1B1A17;   /* warm charcoal — primary text */
+    --ink-soft:  #54524C;   /* body copy */
+    --ink-faint: #8C897F;   /* metadata / mono labels */
+    --line:      #E3E0D8;   /* hairlines */
+    --accent:    #2E47D6;   /* cobalt indigo */
+    --accent-08: rgba(46, 71, 214, 0.08);
+    --accent-14: rgba(46, 71, 214, 0.14);
+
+    /* type */
+    --display: "Fraunces", Georgia, serif;
+    --body:    "IBM Plex Sans", system-ui, sans-serif;
+    --mono:    "IBM Plex Mono", ui-monospace, monospace;
+
+    /* layout */
+    --maxw: 920px;
+    --pad:  clamp(20px, 5vw, 56px);
+    --gap:  clamp(72px, 11vw, 132px); /* section rhythm */
+  }
+
+  /* ============================================================
+     RESET / BASE
+     ============================================================ */
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--body);
+    font-size: 17px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  a { color: inherit; }
+  ::selection { background: var(--accent-14); }
+
+  .wrap { max-width: var(--maxw); margin: 0 auto; padding-inline: var(--pad); }
+
+  /* mono utility label */
+  .label {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+
+  /* ============================================================
+     NAV
+     ============================================================ */
+  .nav {
+    position: sticky; top: 0; z-index: 20;
+    background: color-mix(in srgb, var(--bg) 86%, transparent);
+    backdrop-filter: saturate(140%) blur(8px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav__inner {
+    max-width: var(--maxw); margin: 0 auto; padding: 16px var(--pad);
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  }
+  .nav__brand { font-family: var(--mono); font-size: 0.8rem; letter-spacing: 0.05em; font-weight: 500; }
+  .nav__brand span { color: var(--accent); }
+  .nav__links { display: flex; gap: clamp(14px, 3vw, 30px); }
+  .nav__links a {
+    font-family: var(--mono); font-size: 0.74rem; letter-spacing: 0.08em;
+    text-transform: uppercase; text-decoration: none; color: var(--ink-faint);
+    transition: color 0.2s ease;
+  }
+  .nav__links a:hover, .nav__links a:focus-visible { color: var(--ink); }
+
+  /* ============================================================
+     HERO
+     ============================================================ */
+  .hero { padding-top: clamp(56px, 12vw, 120px); padding-bottom: var(--gap); }
+  .hero__kicker { margin-bottom: 26px; }
+  .hero__title {
+    font-family: var(--display);
+    font-weight: 460;
+    font-size: clamp(2.7rem, 7vw, 5rem);
+    line-height: 1.02;
+    letter-spacing: -0.015em;
+    margin: 0 0 28px;
+    max-width: 14ch;
+  }
+  .hero__title em { font-style: italic; color: var(--accent); }
+  .hero__lede {
+    font-size: clamp(1.05rem, 2.2vw, 1.25rem);
+    color: var(--ink-soft);
+    max-width: 56ch;
+    margin: 0 0 36px;
+  }
+  .hero__lede a { color: var(--ink); text-decoration: underline; text-decoration-color: var(--accent); text-underline-offset: 3px; }
+
+  /* mono "record header" spec line */
+  .spec {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    overflow: hidden;
+    max-width: 640px;
+  }
+  .spec > div { background: var(--surface); padding: 14px 16px; }
+  .spec dt { font-family: var(--mono); font-size: 0.64rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-faint); margin-bottom: 5px; }
+  .spec dd { margin: 0; font-size: 0.92rem; font-weight: 500; }
+
+  /* ============================================================
+     SECTION SHELL
+     ============================================================ */
+  section { scroll-margin-top: 80px; }
+  .section { padding-bottom: var(--gap); }
+  .section__head {
+    display: flex; align-items: baseline; gap: 16px;
+    border-top: 1px solid var(--ink);
+    padding-top: 18px; margin-bottom: 40px;
+  }
+  .section__no { font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.1em; color: var(--accent); }
+  .section__title { font-family: var(--display); font-weight: 500; font-size: clamp(1.5rem, 3.4vw, 2.1rem); margin: 0; letter-spacing: -0.01em; }
+
+  /* ============================================================
+     PROJECT RECORDS (the signature element)
+     ============================================================ */
+  .records { border-top: 1px solid var(--line); }
+  .record { border-bottom: 1px solid var(--line); }
+
+  .record__head {
+    width: 100%; background: none; border: 0; cursor: pointer;
+    display: grid; align-items: center;
+    grid-template-columns: 42px 1fr auto 28px;
+    gap: 18px; padding: 22px 4px; text-align: left;
+    font-family: inherit; color: inherit;
+    transition: background 0.2s ease;
+  }
+  .record__head:hover { background: var(--accent-08); }
+  .record__head:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+  .record__idx { font-family: var(--mono); font-size: 0.8rem; color: var(--ink-faint); }
+  .record__title { font-size: 1.18rem; font-weight: 600; letter-spacing: -0.01em; }
+  .record__meta { font-family: var(--mono); font-size: 0.74rem; letter-spacing: 0.04em; color: var(--ink-faint); white-space: nowrap; }
+  .record__toggle {
+    width: 28px; height: 28px; position: relative; justify-self: end;
+    border: 1px solid var(--line); border-radius: 50%;
+    transition: transform 0.3s ease, border-color 0.2s ease, background 0.2s ease;
+  }
+  .record__head:hover .record__toggle { border-color: var(--accent); }
+  .record__toggle::before, .record__toggle::after {
+    content: ""; position: absolute; top: 50%; left: 50%;
+    width: 11px; height: 1.5px; background: var(--ink);
+    transform: translate(-50%, -50%);
+    transition: transform 0.3s ease, background 0.2s ease;
+  }
+  .record__toggle::after { transform: translate(-50%, -50%) rotate(90deg); }
+  .record__head[aria-expanded="true"] .record__toggle { transform: rotate(135deg); background: var(--accent); border-color: var(--accent); }
+  .record__head[aria-expanded="true"] .record__toggle::before,
+  .record__head[aria-expanded="true"] .record__toggle::after { background: #fff; }
+
+  /* expanding body */
+  .record__body { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.35s ease; }
+  .record__head[aria-expanded="true"] + .record__body { grid-template-rows: 1fr; }
+  .record__inner { overflow: hidden; }
+  .record__pad { padding: 4px 4px 34px 60px; max-width: 64ch; }
+
+  .field { margin-bottom: 22px; }
+  .field:last-child { margin-bottom: 0; }
+  .field__label { display: block; margin-bottom: 8px; }
+  .field p { margin: 0; color: var(--ink-soft); }
+  .field ul { margin: 0; padding-left: 18px; color: var(--ink-soft); }
+  .field li { margin-bottom: 7px; }
+  .field li::marker { color: var(--accent); }
+  .field strong { color: var(--ink); font-weight: 600; }
+
+  .tags { display: flex; flex-wrap: wrap; gap: 8px; }
+  .tags span {
+    font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.03em;
+    padding: 5px 11px; border: 1px solid var(--line); border-radius: 100px;
+    color: var(--ink-soft); background: var(--surface);
+  }
+
+  /* ============================================================
+     ABOUT
+     ============================================================ */
+  .about__lede { font-size: clamp(1.15rem, 2.4vw, 1.4rem); font-family: var(--display); font-weight: 400; line-height: 1.45; max-width: 40ch; margin: 0 0 28px; }
+  .about p { color: var(--ink-soft); max-width: 60ch; margin: 0 0 18px; }
+  .about p a { color: var(--ink); text-decoration: underline; text-decoration-color: var(--accent); text-underline-offset: 3px; }
+
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(28px, 5vw, 56px); margin-top: 48px; }
+  .block { border-top: 1px solid var(--line); padding-top: 18px; }
+  .block h3 { margin: 14px 0 0; font-family: var(--mono); font-size: 0.74rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-faint); font-weight: 500; }
+
+  .skills dl { margin: 0; }
+  .skills dt { font-size: 0.82rem; font-weight: 600; margin: 18px 0 5px; }
+  .skills dt:first-child { margin-top: 0; }
+  .skills dd { margin: 0; color: var(--ink-soft); font-size: 0.95rem; }
+
+  .edu .item { margin-top: 22px; }
+  .edu .item:first-child { margin-top: 0; }
+  .edu .deg { font-weight: 600; }
+  .edu .meta { font-family: var(--mono); font-size: 0.72rem; color: var(--ink-faint); letter-spacing: 0.03em; margin-top: 3px; }
+
+  /* ============================================================
+     CONTACT
+     ============================================================ */
+  .contact__title { font-family: var(--display); font-weight: 500; font-size: clamp(2rem, 5vw, 3.4rem); letter-spacing: -0.015em; margin: 0 0 28px; line-height: 1.05; }
+  .contact__title a { text-decoration: none; border-bottom: 2px solid var(--accent); }
+  .contact__title a:hover { color: var(--accent); }
+  .links { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 8px; }
+  .links a {
+    font-family: var(--mono); font-size: 0.78rem; letter-spacing: 0.04em;
+    text-decoration: none; padding: 11px 18px;
+    border: 1px solid var(--ink); border-radius: 100px;
+    transition: background 0.2s ease, color 0.2s ease;
+  }
+  .links a:hover, .links a:focus-visible { background: var(--ink); color: var(--bg); }
+  .links a.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .links a.primary:hover { background: var(--ink); border-color: var(--ink); }
+
+  footer { border-top: 1px solid var(--line); padding: 28px 0 56px; }
+  footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+  footer span { font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.06em; color: var(--ink-faint); }
+
+  /* ============================================================
+     REVEAL ON SCROLL
+     ============================================================ */
+  .reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .reveal.in { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1; transform: none; transition: none; }
+    .record__body, .record__toggle { transition: none; }
+  }
+
+  /* ============================================================
+     RESPONSIVE
+     ============================================================ */
+  @media (max-width: 680px) {
+    body { font-size: 16px; }
+    .nav__links { gap: 16px; }
+    .spec { grid-template-columns: 1fr; }
+    .record__head { grid-template-columns: 30px 1fr 28px; gap: 12px; }
+    .record__meta { grid-column: 2 / 3; white-space: normal; }
+    .record__pad { padding-left: 4px; }
+    .grid2 { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+  <!-- ===================== NAV ===================== -->
+  <nav class="nav">
+    <div class="nav__inner">
+      <div class="nav__brand">Hyejin Ryoo<span>.</span></div>
+      <div class="nav__links">
+        <a href="#work">Work</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ===================== HERO ===================== -->
+  <header class="hero">
+    <div class="wrap">
+      <p class="label hero__kicker reveal">Business Analyst &amp; Product Designer · New York</p>
+      <h1 class="hero__title reveal">Where data analysis becomes <em>product&nbsp;design.</em></h1>
+      <p class="hero__lede reveal">
+        I lead a retail POS platform end to end at <a href="#work">KISS Products</a> — from requirements
+        and data analysis to UX, prototypes, and QA. I hold a master's in business analytics and
+        build things that work for the people standing at the counter.
+      </p>
+      <dl class="spec reveal">
+        <div><dt>Now</dt><dd>Retail POS &amp; CRM</dd></div>
+        <div><dt>Toolkit</dt><dd>Product · UX · Data</dd></div>
+        <div><dt>Based in</dt><dd>New York, NY</dd></div>
+      </dl>
+    </div>
+  </header>
+
+  <main>
+    <!-- ===================== WORK ===================== -->
+    <section id="work" class="section">
+      <div class="wrap">
+        <div class="section__head reveal">
+          <span class="section__no">01 / Work</span>
+          <h2 class="section__title">Selected projects</h2>
+        </div>
+        <p class="label reveal" style="margin-bottom:18px;">Expand a record to read the case study</p>
+
+        <div class="records reveal">
+
+          <!-- Record 01 -->
+          <div class="record">
+            <button class="record__head" aria-expanded="false" aria-controls="rec1">
+              <span class="record__idx">01</span>
+              <span class="record__title">Retail POS Platform</span>
+              <span class="record__meta">KISS Products · 2024—Now</span>
+              <span class="record__toggle" aria-hidden="true"></span>
+            </button>
+            <div class="record__body" id="rec1"><div class="record__inner"><div class="record__pad">
+              <div class="field"><span class="label field__label">Overview</span>
+                <p>A point-of-sale platform built for how beauty supply stores actually run — fast checkout, promotions, and inventory across locations. I own it as the business analyst and primary designer, from the first requirement to the last test case.</p>
+              </div>
+              <div class="field"><span class="label field__label">What I did</span>
+                <ul>
+                  <li>Led product development of the POS platform, improving transaction workflows and operational visibility.</li>
+                  <li>Wrote functional specs and defined user journeys, wireframes, and feature flows with the UX/UI team.</li>
+                  <li>Coordinated software vendors, payment processors, and POS hardware providers through rollout.</li>
+                  <li>Built and ran QA and UAT frameworks covering promotions, discounts, and payment processing.</li>
+                  <li>Analyzed retail operations and competitor POS solutions to prioritize the roadmap.</li>
+                </ul>
+              </div>
+              <div class="field"><span class="label field__label">Impact</span>
+                <p>Cleaner transaction workflows and clearer operational visibility for store staff, on a roadmap grounded in real retail behavior rather than guesswork.</p>
+              </div>
+              <div class="field"><span class="label field__label">Stack</span>
+                <div class="tags"><span>Product specs</span><span>UX / UI</span><span>Prototyping</span><span>QA / UAT</span><span>SQL</span><span>Excel</span></div>
+              </div>
+            </div></div></div>
+          </div>
+
+          <!-- Record 02 -->
+          <div class="record">
+            <button class="record__head" aria-expanded="false" aria-controls="rec2">
+              <span class="record__idx">02</span>
+              <span class="record__title">NLP Trend Analysis</span>
+              <span class="record__meta">S&amp;P Global · 2024</span>
+              <span class="record__toggle" aria-hidden="true"></span>
+            </button>
+            <div class="record__body" id="rec2"><div class="record__inner"><div class="record__pad">
+              <div class="field"><span class="label field__label">Overview</span>
+                <p>A feature inside the S&amp;P Capital IQ platform that lets users discover how companies relate through the language they share — surfacing connections that a plain keyword search would miss.</p>
+              </div>
+              <div class="field"><span class="label field__label">What I did</span>
+                <ul>
+                  <li>Developed the trend-analysis feature using NLP and LLM techniques, built around keyword search.</li>
+                  <li>Grouped related key-phrases and concepts with clustering algorithms and cosine-similarity scoring.</li>
+                  <li>Worked with cross-functional teams to integrate the feature into existing systems.</li>
+                </ul>
+              </div>
+              <div class="field"><span class="label field__label">Impact</span>
+                <p>A richer search experience and deeper insight into how companies reference shared concepts — improving both analytics quality and customer satisfaction.</p>
+              </div>
+              <div class="field"><span class="label field__label">Stack</span>
+                <div class="tags"><span>Python</span><span>NLP</span><span>LLM</span><span>Clustering</span><span>Cosine similarity</span></div>
+              </div>
+            </div></div></div>
+          </div>
+
+          <!-- Record 03 -->
+          <div class="record">
+            <button class="record__head" aria-expanded="false" aria-controls="rec3">
+              <span class="record__idx">03</span>
+              <span class="record__title">NYC 311 &amp; Parking Data Warehouse</span>
+              <span class="record__meta">Baruch · 2023</span>
+              <span class="record__toggle" aria-hidden="true"></span>
+            </button>
+            <div class="record__body" id="rec3"><div class="record__inner"><div class="record__pad">
+              <div class="field"><span class="label field__label">Overview</span>
+                <p>Two large, messy NYC open datasets — 311 service complaints and open parking violations — that nobody had connected. I merged them into a clean warehouse and visualized what the combination revealed.</p>
+              </div>
+              <div class="field"><span class="label field__label">What I did</span>
+                <ul>
+                  <li>Built ETL pipelines with <strong>dbt</strong> to merge and transform diverse sources into a robust data warehouse.</li>
+                  <li>Designed Tableau dashboards surfacing KPIs and patterns across complaints and violations.</li>
+                </ul>
+              </div>
+              <div class="field"><span class="label field__label">Impact</span>
+                <p>A queryable, combined view of two civic datasets and the relationships hiding between them.</p>
+              </div>
+              <div class="field"><span class="label field__label">Stack</span>
+                <div class="tags"><span>dbt</span><span>SQL</span><span>ETL</span><span>Tableau</span></div>
+              </div>
+            </div></div></div>
+          </div>
+
+          <!-- Record 04 -->
+          <div class="record">
+            <button class="record__head" aria-expanded="false" aria-controls="rec4">
+              <span class="record__idx">04</span>
+              <span class="record__title">Data Analytics Competitions</span>
+              <span class="record__meta">GM &amp; Pitney Bowes · 2023—24</span>
+              <span class="record__toggle" aria-hidden="true"></span>
+            </button>
+            <div class="record__body" id="rec4"><div class="record__inner"><div class="record__pad">
+              <div class="field"><span class="label field__label">Baruch Data Challenge — 1st Place · Pitney Bowes</span>
+                <p>Led a team through time-series analysis, clustering, and segmentation to build a predictive solution that improved client decision-making. Managed the project plan, kept delivery on time, and built the final presentation that carried the business insights.</p>
+              </div>
+              <div class="field"><span class="label field__label">Adobe Analytics Challenge — Semi-Finalist · General Motors</span>
+                <p>Analyzed Cadillac's data in Adobe Analytics to identify key user behaviors and conversion drivers, then recommended mobile optimization and personalized engagement for the Build &amp; Buy tool.</p>
+              </div>
+              <div class="field"><span class="label field__label">Stack</span>
+                <div class="tags"><span>Time-series</span><span>Clustering</span><span>Segmentation</span><span>Adobe Analytics</span><span>Storytelling</span></div>
+              </div>
+            </div></div></div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== ABOUT ===================== -->
+    <section id="about" class="section about">
+      <div class="wrap">
+        <div class="section__head reveal">
+          <span class="section__no">02 / About</span>
+          <h2 class="section__title">A little background</h2>
+        </div>
+
+        <p class="about__lede reveal">I came to data the long way — and that's the point.</p>
+        <p class="reveal">
+          I studied political science and journalism at Dongguk University, then earned a Master of Science in
+          Business Analytics at Baruch's Zicklin School of Business. That path — from understanding people and
+          stories to modeling their behavior — is exactly how I approach products: start with the human,
+          prove it with data.
+        </p>
+        <p class="reveal">
+          Today I lead a retail POS platform at <strong>KISS Products</strong> as a business analyst and product
+          designer, owning requirements, UX, prototyping, and QA. Earlier I built NLP features at S&amp;P Global,
+          taught Data Visualization and Python as a graduate teaching assistant at Baruch, and managed ₩1B in
+          annual ad campaigns at Buddhist Broadcasting System.
+        </p>
+
+        <div class="grid2">
+          <div class="block skills reveal">
+            <h3>Skills</h3>
+            <dl>
+              <dt>Product &amp; Design</dt>
+              <dd>Requirements &amp; specs, UX/UI, prototyping, design systems, QA &amp; UAT</dd>
+              <dt>Data &amp; ML</dt>
+              <dd>Python, SQL, NLP, LLM, R, ETL / dbt, SPSS</dd>
+              <dt>Analytics &amp; Viz</dt>
+              <dd>Tableau, Advanced Excel, Google Analytics, Adobe Analytics, AWS</dd>
+              <dt>Languages</dt>
+              <dd>Korean (native), English (fluent), Japanese (intermediate)</dd>
+            </dl>
+          </div>
+          <div class="block edu reveal">
+            <h3>Education</h3>
+            <div class="item">
+              <div class="deg">M.S., Business Analytics</div>
+              <div>Baruch College, Zicklin School of Business</div>
+              <div class="meta">2022—2024 · GPA 3.98 / 4.0 · New York, NY</div>
+            </div>
+            <div class="item">
+              <div class="deg">B.A., Political Science</div>
+              <div>Dongguk University — double major in Journalism &amp; Mass Communication</div>
+              <div class="meta">2014—2018 · GPA 3.95 / 4.5 · Seoul, Korea</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== CONTACT ===================== -->
+    <section id="contact" class="section">
+      <div class="wrap">
+        <div class="section__head reveal">
+          <span class="section__no">03 / Contact</span>
+          <h2 class="section__title">Get in touch</h2>
+        </div>
+        <p class="contact__title reveal">
+          Let's talk —<br /><a href="mailto:Hyejin7111@gmail.com">Hyejin7111@gmail.com</a>
+        </p>
+        <div class="links reveal">
+          <a class="primary" href="mailto:Hyejin7111@gmail.com">Email me</a>
+          <a href="https://www.linkedin.com/in/hyejinryoo" target="_blank" rel="noopener">LinkedIn ↗</a>
+          <a href="./Hyejin-Ryoo-Resume.pdf" target="_blank" rel="noopener">Résumé (PDF) ↗</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <span>Hyejin Ryoo — New York, NY</span>
+      <span>© 2026</span>
+    </div>
+  </footer>
+
+<script>
+  /* ---- Accordion: project records ---- */
+  document.querySelectorAll('.record__head').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var open = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', String(!open));
+    });
+  });
+
+  /* ---- Reveal on scroll ---- */
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce) {
+    document.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('in'); });
+  } else {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
+  }
+</script>
+</body>
+</html>
